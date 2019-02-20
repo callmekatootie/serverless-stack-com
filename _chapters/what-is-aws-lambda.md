@@ -2,6 +2,8 @@
 layout: post
 title: What is AWS Lambda?
 date: 2016-12-23 18:00:00
+lang: en
+ref: what-is-aws-lambda
 description: AWS Lambda is a serverless computing service provided by Amazon Web Services. It runs pieces of code (called Lambda functions) in stateless containers that are brought up on demand to respond to events (such as HTTP requests). The containers are then turned off when the function has completed execution. Users are charged only for the time it takes to execute the function.
 comments_id: what-is-aws-lambda/308
 ---
@@ -17,12 +19,14 @@ Let's start by quickly looking at the technical specifications of AWS Lambda. La
 - Python: 3.6 and 2.7
 - .NET Core: 1.0.1 and 2.0
 - Go 1.x
+- Ruby 2.5
+- Rust
 
 Each function runs inside a container with a 64-bit Amazon Linux AMI. And the execution environment has:
 
-- Memory: 128MB - 3008MB
+- Memory: 128MB - 3008MB, in 64 MB increments
 - Ephemeral disk space: 512MB
-- Max execution duration: 300 seconds
+- Max execution duration: 900 seconds
 - Compressed package size: 50MB
 - Uncompressed package size: 250MB
 
@@ -30,7 +34,7 @@ You might notice that CPU is not mentioned as a part of the container specificat
 
 The ephemeral disk space is available in the form of the `/tmp` directory. You can only use this space for temporary storage since subsequent invocations will not have access to this. We'll talk a bit more on the stateless nature of the Lambda functions below.
 
-The execution duration means that your Lambda function can run for a maximum of 300 seconds or 5 minutes. This means that Lambda isn't meant for long running processes.
+The execution duration means that your Lambda function can run for a maximum of 900 seconds or 15 minutes. This means that Lambda isn't meant for long running processes.
 
 The package size refers to all your code necessary to run your function. This includes any dependencies (`node_modules/` directory in case of Node.js) that your function might import. There is a limit of 250MB on the uncompressed package and a 50MB limit once it has been compressed. We'll take a look at the packaging process below.
 

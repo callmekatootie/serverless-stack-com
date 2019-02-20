@@ -4,7 +4,6 @@ title: Signup with AWS Cognito
 date: 2017-01-21 00:00:00
 description: To implement a signup form in our React.js app using Amazon Cognito we are going to use AWS Amplify. We are going to call the Auth.signUp() method to sign a user up and call the Auth.confirmSignUp() method with the confirmation code to complete the process.
 context: true
-code: frontend
 comments_id: signup-with-aws-cognito/130
 ---
 
@@ -97,5 +96,7 @@ aws cognito-idp admin-confirm-sign-up \
 ```
 
 Just be sure to use your Cognito User Pool Id and the email you used to create the account.
+
+If you would like to allow your users to change their email or password, you can refer to our [Extra Credit series of chapters on user management]({% link _chapters/manage-user-accounts-in-aws-amplify.md %}).
 
 Next up, we are going to create our first note.

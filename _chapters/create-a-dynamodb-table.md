@@ -2,6 +2,8 @@
 layout: post
 title: Create a DynamoDB Table
 date: 2016-12-27 00:00:00
+lang: en
+ref: create-a-dynamodb-table
 description: Amazon DynamoDB is a fully managed NoSQL database that we are going to use to power our serverless API backend. DynamoDB stores data in tables and each table has a primary key that cannot be changed once set. We are also going to provision the throughput capacity by setting reads and writes for our DynamoDB table.
 context: true
 comments_id: create-a-dynamodb-table/139
@@ -40,7 +42,7 @@ If you see the following message, deselect **Use default settings**.
 
 ![Auto Scaling IAM Role Warning screenshot](/assets/dynamodb/auto-scaling-iam-role-warning.png)
 
-Scroll to the bottom, ensure that **New role: DynamoDBAutoscaleRole** is selected, and select **Create**.
+Scroll to the bottom, ensure that **DynamoDB AutoScaling Service Linked Role** is selected, and select **Create**.
 
 ![Set Table Provisioned Capacity screenshot](/assets/dynamodb/set-table-provisioned-capacity.png)
 
@@ -51,6 +53,8 @@ Note that the default setting provisions 5 reads and 5 writes. When you create a
 The `notes` table has now been created. If you find yourself stuck with the **Table is being created** message; refresh the page manually.
 
 ![Select DynamoDB Service screenshot](/assets/dynamodb/dynamodb-table-created.png)
+
+It is also a good idea to set up backups for your DynamoDB table, especially if you are planning to use it in production. We cover this in an extra-credit chapter, [Backups in DynamoDB]({% link _chapters/backups-in-dynamodb.md %}).
 
 Next we'll set up an S3 bucket to handle file uploads.
 

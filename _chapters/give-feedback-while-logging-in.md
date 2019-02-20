@@ -4,7 +4,6 @@ title: Give Feedback While Logging In
 date: 2017-01-18 00:00:00
 description: We should give users some feedback while we are logging them in to our React.js app. To do so we are going to create a component that animates a Glyphicon refresh icon inside a React-Bootstrap Button component. We’ll do the animation while the log in call is in progress.
 context: true
-code: frontend
 comments_id: give-feedback-while-logging-in/46
 ---
 
@@ -131,5 +130,7 @@ import LoaderButton from "../components/LoaderButton";
 And now when we switch over to the browser and try logging in, you should see the intermediate state before the login completes.
 
 ![Login loading state screenshot](/assets/login-loading-state.png)
+
+If you would like to add _Forgot Password_ functionality for your users, you can refer to our [Extra Credit series of chapters on user management]({% link _chapters/manage-user-accounts-in-aws-amplify.md %}).
 
 Next let's implement the sign up process for our app.

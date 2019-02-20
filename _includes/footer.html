@@ -8,7 +8,8 @@
           <li class="site-title">
             {{ site.title | escape }}
           </li>
-          <li><a class="page-link" href="/#table-of-contents">Table of Contents</a></li>
+          <li><a class="page-link" href="{% link _chapters/changelog.md %}">Changelog</a></li>
+          <li><a class="page-link" href="{% link showcase.md %}">Showcase</a></li>
           <li><a class="page-link" href="{% link about.md %}">About us</a></li>
           <li><a class="page-link" href="{% link sponsors.md %}">Sponsors</a></li>
           <li><a class="page-link" href="{{ site.github_repo }}">GitHub</a></li>
@@ -30,18 +31,46 @@
 
 </footer>
 
-{% if jekyll.environment == 'production' %}
-<!--
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/58b60cd55b8fe5150ee934ea/default';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<!-- Newsletter Form JS -->
+<script src="https://emailoctopus.com/bundles/emailoctopuslist/js/formEmbed.js?1519058398"></script>
+<!-- Code Snippet Copy JS -->
+<script src="https://unpkg.com/clipboard@2.0.0/dist/clipboard.min.js"></script>
+<script>
+  /** Start copy snippet code **/
+  var codeElements = document.querySelectorAll(".highlighter-rouge code");
+
+  for (i = 0; i < codeElements.length; i++) {
+    var currentItem = codeElements[i];
+    var clipButton = '<button class="clipbutton">Copy</button>';
+    currentItem.insertAdjacentHTML("beforebegin", clipButton);
+  }
+
+  var clipboard = new ClipboardJS(".clipbutton", {
+    target: function(trigger) {
+      return trigger.nextElementSibling;
+    }
+  });
+
+  clipboard.on("success", function(e) {
+    e.clearSelection();
+    e.trigger.nextElementSibling.classList.add("copied");
+    e.trigger.innerText = "Copied!";
+    let t = setTimeout(function() {
+      e.trigger.nextElementSibling.classList.remove("copied");
+      e.trigger.innerText = "Copy";
+    }, 300);
+  });
+  /** End copy snippet code **/
+
+  /** Start sidebar ToC code **/
+  $('#toc-sidebar ul.steps:has(a.active)').addClass('open');
+
+  $('#toc-sidebar p.step a').click(function(e) {
+    e.preventDefault();
+    $(this).parent().next().toggleClass('open');
+  });
+  /** End sidebar ToC code **/
 </script>
--->
-{% endif %}
+<!-- instant.page pre-loading -->
+<script src="//instant.page/1.0.0" type="module" integrity="sha384-6w2SekMzCkuMQ9sEbq0cLviD/yR2HfA/+ekmKiBnFlsoSvb/VmQFSi/umVShadQI"></script>

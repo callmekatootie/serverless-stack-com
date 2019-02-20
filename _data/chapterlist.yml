@@ -64,6 +64,8 @@ build-api:
       url: /chapters/add-an-update-note-api.html
     - page: Add a delete note API
       url: /chapters/add-a-delete-note-api.html
+    - page: Handle API Gateway CORS errors
+      url: /chapters/handle-api-gateway-cors-errors.html
 
 deploy-backend:
   title: Deploying the Backend
@@ -302,6 +304,8 @@ conclusion:
       url: /chapters/wrapping-up.html
     - page: Futher reading
       url: /chapters/further-reading.html
+    - page: Translations
+      url: /chapters/translations.html
     - page: Giving back
       url: /chapters/giving-back.html
     - page: Changelog
@@ -317,7 +321,7 @@ extra-sls-architecture:
     - page: Cross-stack references in Serverless
       url: /chapters/cross-stack-references-in-serverless.html
       subchapters:
-        - page: DyanamoDB as a Serverless service
+        - page: DynamoDB as a Serverless service
           url: /chapters/dynamodb-as-a-serverless-service.html
         - page: S3 as a Serverless service
           url: /chapters/s3-as-a-serverless-service.html
@@ -339,14 +343,31 @@ extra-backend:
       url: /chapters/serverless-environment-variables.html
     - page: Stages in Serverless Framework
       url: /chapters/stages-in-serverless-framework.html
+    - page: Backups in DynamoDB
+      url: /chapters/backups-in-dynamodb.html
     - page: Configure multiple AWS profiles
       url: /chapters/configure-multiple-aws-profiles.html
     - page: Customize the Serverless IAM Policy
       url: /chapters/customize-the-serverless-iam-policy.html
+    - page: Mapping Cognito Identity Id and User Pool Id
+      url: /chapters/mapping-cognito-identity-id-and-user-pool-id.html
     - page: Connect to API Gateway with IAM auth
       url: /chapters/connect-to-api-gateway-with-iam-auth.html
     - page: Serverless Node.js Starter
       url: /chapters/serverless-nodejs-starter.html
+
+extra-user-mgmt:
+  title: User Management
+  chapters:
+    - page: Manage User Accounts in AWS Amplify
+      url: /chapters/manage-user-accounts-in-aws-amplify.html
+      subchapters:
+        - page: Handle Forgot and Reset Password
+          url: /chapters/handle-forgot-and-reset-password.html
+        - page: Allow Users to Change Passwords
+          url: /chapters/allow-users-to-change-passwords.html
+        - page: Allow Users to Change Their Email
+          url: /chapters/allow-users-to-change-their-email.html
 
 extra-frontend:
   title: Frontend

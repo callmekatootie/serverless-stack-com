@@ -20,7 +20,6 @@ Let's add our first function.
 import uuid from "uuid";
 import AWS from "aws-sdk";
 
-AWS.config.update({ region: "us-east-1" });
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 export function main(event, context, callback) {
@@ -77,9 +76,9 @@ export function main(event, context, callback) {
 
 There are some helpful comments in the code but we are doing a few simple things here.
 
-- We are setting the AWS JS SDK to use the region `us-east-1` while connecting to DynamoDB.
+- The AWS JS SDK assumes the region based on the current region of the Lambda function. So if your DynamoDB table is in a different region, make sure to set it by calling `AWS.config.update({ region: "my-region" });` before initilizing the DynamoDB client.
 - Parse the input from the `event.body`. This represents the HTTP request parameters.
-- The `userId` is a Federated Identity id that comes in as a part of the request. This is set after our user has been authenticated via the User Pool. We are going to expand more on this in the coming chapters when we set up our Cognito Identity Pool.
+- The `userId` is a Federated Identity id that comes in as a part of the request. This is set after our user has been authenticated via the User Pool. We are going to expand more on this in the coming chapters when we set up our Cognito Identity Pool. However, if you want to use the user's User Pool user Id; take a look at the [Mapping Cognito Identity Id and User Pool Id]({% link _chapters/mapping-cognito-identity-id-and-user-pool-id.md %}) chapter.
 - Make a call to DynamoDB to put a new object with a generated `noteId` and the current date as the `createdAt`.
 - Upon success, return the newly created note object with the HTTP status code `200` and response headers to enable **CORS (Cross-Origin Resource Sharing)**.
 - And if the DynamoDB call fails then return an error with the HTTP status code `500`.
@@ -143,6 +142,8 @@ functions:
 ```
 
 Here we are adding our newly added create function to the configuration. We specify that it handles `post` requests at the `/notes` endpoint. This pattern of using a single Lambda function to respond to a single HTTP event is very much like the [Microservices architecture](https://en.wikipedia.org/wiki/Microservices). We discuss this and a few other patterns in the chapter on [organizing Serverless Framework projects]({% link _chapters/organizing-serverless-projects.md %}). We set CORS support to true. This is because our frontend is going to be served from a different domain. As the authorizer we are going to restrict access to our API based on the user's IAM credentials. We will touch on this and how our User Pool works with this, in the Cognito Identity Pool chapter.
+
+The `iamRoleStatements` section is telling AWS which resources our Lambda functions have access to. In this case we are saying that our Lambda functions can carry out the above listed actions on DynamoDB. We specify DynamoDB using `arn:aws:dynamodb:us-east-1:*:*`. This is roughly pointing to every DynamoDB table in the `us-east-1` region. We can be more specific here by specifying the table name but we'll leave this as an exercise for the reader. Just make sure to use the region that the DynamoDB table was created in, as this can be a common source of issues later on. For us the region is `us-east-1`.
 
 ### Test
 
@@ -240,8 +241,6 @@ This will manage building the response objects for both success and failure case
 ``` javascript
 import AWS from "aws-sdk";
 
-AWS.config.update({ region: "us-east-1" });
-
 export function call(action, params) {
   const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
@@ -258,7 +257,7 @@ import uuid from "uuid";
 import * as dynamoDbLib from "./libs/dynamodb-lib";
 import { success, failure } from "./libs/response-lib";
 
-export async function main(event, context, callback) {
+export async function main(event, context) {
   const data = JSON.parse(event.body);
   const params = {
     TableName: "notes",
@@ -273,12 +272,14 @@ export async function main(event, context, callback) {
 
   try {
     await dynamoDbLib.call("put", params);
-    callback(null, success(params.Item));
+    return success(params.Item);
   } catch (e) {
-    callback(null, failure({ status: false }));
+    return failure({ status: false });
   }
 }
 ```
+
+We are also using the `async/await` pattern here to refactor our Lambda function. This allows us to return once we are done processing; instead of using the callback function.
 
 Next, we are going to write the API to get a note given its id.
 
@@ -293,6 +294,6 @@ Next, we are going to write the API to get a note given its id.
   ``` javascript
   catch(e) {
     console.log(e);
-    callback(null, failure({status: false}));
+    return failure({status: false});
   }
   ```

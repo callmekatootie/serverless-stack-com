@@ -18,7 +18,7 @@ Finally, we are going to create an API that allows a user to delete a given note
 import * as dynamoDbLib from "./libs/dynamodb-lib";
 import { success, failure } from "./libs/response-lib";
 
-export async function main(event, context, callback) {
+export async function main(event, context) {
   const params = {
     TableName: "notes",
     // 'Key' defines the partition key and sort key of the item to be removed
@@ -32,9 +32,9 @@ export async function main(event, context, callback) {
 
   try {
     const result = await dynamoDbLib.call("delete", params);
-    callback(null, success({ status: true }));
+    return success({ status: true });
   } catch (e) {
-    callback(null, failure({ status: false }));
+    return failure({ status: false });
   }
 }
 ```
@@ -99,4 +99,4 @@ And the response should look similar to this.
 }
 ```
 
-Now that our APIs are complete; we'll deploy them next.
+Now that our APIs are complete; we are almost ready to deploy them.
